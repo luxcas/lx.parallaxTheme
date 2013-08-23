@@ -1,0 +1,69 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    i18n_domain="lx.parallaxTheme">
+
+  <!-- 'Lx Parallax Scrolling Theme' Zope 3 browser layer
+    Register views, viewlets and resources for this layer to make sure
+    they only apply to the 'Lx Parallax Scrolling Theme' theme.
+    You can also use this layer to override default Plone browser views
+    and viewlets only within the 'Lx Parallax Scrolling Theme' theme.
+  -->
+  <interface
+      interface=".interfaces.ILxParallaxTheme"
+      type="zope.publisher.interfaces.browser.IBrowserSkinType"
+      name="Lx Parallax Scrolling Theme"
+      />
+  
+  <!-- Viewlets registration -->
+  <!-- EXAMPLE (UNCOMMENT TO MAKE AVAILABLE):
+  <browser:viewlet
+      name="lx.someviewlet"
+      manager="plone.app.layout.viewlets.interfaces.IPortalFooter"
+      class=".viewlets.MyViewlet"
+      layer=".interfaces.ILxParallaxTheme"
+      permission="zope2.View"
+      />
+  -->
+
+  <!-- Zope 3 browser resources -->
+
+  <!-- Resource directory for images
+    See lx/parallaxTheme/browser/images/README.txt
+    for more information about registering images as Zope 3 browser
+    resources.
+  -->
+  <browser:resourceDirectory
+      name="lx.parallaxTheme.images"
+      directory="images"
+      layer=".interfaces.ILxParallaxTheme"
+      />
+
+  <!-- Resource directory for stylesheets
+    See lx/parallaxTheme/browser/stylesheets/README.txt
+    for more information about registering stylesheets as Zope 3 browser
+    resources.
+  -->
+  <browser:resourceDirectory
+      name="lx.parallaxTheme.stylesheets"
+      directory="stylesheets"
+      layer=".interfaces.ILxParallaxTheme"
+      />
+  
+    <browser:page
+        name="lxfolderfullview"
+        for="Products.CMFCore.interfaces.ISiteRoot"
+        class=".lxfolderfullview.LxFolderFullView"
+        layer=".interfaces.ILxParallaxTheme"
+        permission="zope2.View"
+    />  
+
+    <browser:page
+        name="lxfolderfullview"
+        for="Products.ATContentTypes.interfaces.folder.IATFolder"
+        class=".lxfolderfullview.LxFolderFullView"
+        layer=".interfaces.ILxParallaxTheme"
+        permission="zope2.View"
+    />  
+    
+</configure>

@@ -1,0 +1,52 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+    xmlns:tal="http://xml.zope.org/namespaces/tal"
+    xmlns:metal="http://xml.zope.org/namespaces/metal"
+    xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+    lang="en"
+    metal:use-macro="here/main_template/macros/master"
+    i18n:domain="plone">
+    <head>
+    </head>
+    <body>
+        <div metal:fill-slot="main"
+            tal:define="contents view/getContent">
+            <div class="background"></div>
+            <div id="header">
+                <div id="nav">
+                    <tal:block tal:repeat="content contents">
+                        <a tal:attributes="href string:#${content/id}"class="nav-button" tal:content="content/Title">Título</a>
+                    </tal:block>
+                </div>
+                <div id="conteudoPortal">
+                    <tal:block tal:repeat="content contents">
+                        <div class="slide" tal:attributes="id string:${content/id}" style="clear:both;">
+                            <tal:block tal:condition="python:content.portal_type == 'Document'">
+                                <h1 tal:content="content/Title"></h1>
+                                <p class="documentDescription" tal:content="content/Description"></p>
+                                <div class="textContent">
+                                    <span tal:replace="structure content/getText"/>
+                                </div>
+                            </tal:block>
+                            <tal:block tal:condition="python:content.portal_type == 'News Item'">
+                                <h1 tal:content="content/Title"></h1>
+                                <p class="documentDescription" tal:content="content/Description"></p>
+                                <div class="newsImageContainer"
+                                    tal:condition="content/getImage|nothing">
+                                    <img tal:replace="structure python: content.tag(scale='preview', css_class='newsImage')" src="" alt="" />
+                                    <p class="discreet" tal:condition="content/imageCaption|nothing">
+                                        <metal:field use-macro="python:content.widget('imageCaption', mode='view')">
+                                            Image Caption
+                                        </metal:field>
+                                    </p>
+                                </div>
+                                <div class="textContent">
+                                    <span tal:replace="structure content/getText"/>
+                                </div>
+                            </tal:block>
+                        </div>
+                    </tal:block>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
